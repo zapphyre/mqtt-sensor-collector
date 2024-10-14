@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SensorUpdateHandler implements ESPMessageHandler<String, MeasurementLog> {
 
+    private final String[] sensors = {"multi", "odor", "voc", "aqi", "tvoc", "eco2"};
     private final MeasurementRepository measurementRepository;
 
     @Override
@@ -28,7 +29,6 @@ public class SensorUpdateHandler implements ESPMessageHandler<String, Measuremen
 
     @Override
     public MeasurementLog getMsgConverter(String payload) {
-        String[] sensors = {"multi", "odor", "voc", "aqi", "tvoc", "eco2"};
         int[] idx = {0};
 
         List<Measurement> meas = Arrays.stream(payload.split(";"))

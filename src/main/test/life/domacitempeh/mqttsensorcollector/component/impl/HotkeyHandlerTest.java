@@ -7,13 +7,7 @@ public class HotkeyHandlerTest {
     @Test
     void testHotkey() {
         HotkeyHandler hotkeyHandler = new HotkeyHandler();
-        HotkeyHandler.Dimension dimension = hotkeyHandler.togglePointerLocation();
-        dimension = hotkeyHandler.togglePointerLocation();
-        dimension = hotkeyHandler.togglePointerLocation();
-        dimension = hotkeyHandler.togglePointerLocation();
-        dimension = hotkeyHandler.togglePointerLocation();
-        dimension = hotkeyHandler.togglePointerLocation();
-        dimension = hotkeyHandler.togglePointerLocation();
-        dimension = hotkeyHandler.togglePointerLocation();
+
+        hotkeyHandler.processMessage("");
     }
 }

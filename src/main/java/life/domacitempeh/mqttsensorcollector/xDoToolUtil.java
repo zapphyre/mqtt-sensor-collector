@@ -4,6 +4,7 @@ import life.domacitempeh.mqttsensorcollector.component.impl.HotkeyHandler;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -98,9 +99,9 @@ public class xDoToolUtil {
     }
 
     @SneakyThrows
-    public static void setPointerLocation(HotkeyHandler.Dimension dimension) {
+    public static void setPointerLocation(Dimension dimension) {
         log.info("setting pointer location to " + dimension);
-        String[] args = new String[]{"xdotool", "mousemove", dimension.getX().toString(), dimension.getY().toString()};
+        String[] args = new String[]{"xdotool", "mousemove", String.valueOf(dimension.getWidth()), String.valueOf(dimension.getHeight())};
         Process proc = new ProcessBuilder(args).start();
     }
 
