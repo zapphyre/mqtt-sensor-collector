@@ -33,7 +33,56 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+        <dependency>
+            <groupId>com.github.WilliamAHartman</groupId>
+            <artifactId>Jamepad</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.electronstudio.sdl2gdx</groupId>
+            <artifactId>sdl2gdx</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.badlogicgames.gdx-controllers</groupId>
+            <artifactId>gdx-controllers-desktop</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.libsdl4j</groupId>
+            <artifactId>libsdl4j</artifactId>
+            <version>2.28.4-1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.jinput</groupId>
+            <artifactId>jinput</artifactId>
+            <version>2.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.jinput</groupId>
+            <artifactId>jinput</artifactId>
+            <version>2.0.10</version>
+            <classifier>natives-all</classifier>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.6.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.asmus</groupId>
+            <artifactId>jpad-remote</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -169,7 +218,7 @@
                             <goal>clean</goal>
                         </goals>
                         <configuration>
-<!--                            <excludeDefaultDirectories>true</excludeDefaultDirectories>-->
+                            <!--                            <excludeDefaultDirectories>true</excludeDefaultDirectories>-->
                             <filesets>
                                 <fileset>
                                     <directory>deploy</directory>
@@ -201,7 +250,7 @@
                                     <includes>
                                         <include>*.jar</include>
                                     </includes>
-<!--                                    <filtering>true</filtering>-->
+                                    <!--                                    <filtering>true</filtering>-->
                                 </resource>
                             </resources>
                         </configuration>

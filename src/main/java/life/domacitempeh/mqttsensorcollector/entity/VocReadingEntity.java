@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -14,14 +15,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Measurement implements Serializable {
+public class VocReadingEntity implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String device;
+    private Integer value;
 
-    private int value;
+    @Builder.Default
+    private LocalDateTime timestamp = LocalDateTime.now();
 }
-

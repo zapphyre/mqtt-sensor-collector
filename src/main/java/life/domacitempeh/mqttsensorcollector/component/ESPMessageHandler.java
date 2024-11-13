@@ -4,7 +4,7 @@ import org.springframework.messaging.Message;
 
 import java.util.Optional;
 
-public interface ESPMessageHandler<T, R> extends TopicalMessageHandler {
+public interface ESPMessageHandler<R> extends TopicalMessageHandler {
 
     @Override
     default void acceptMessage(Message<?> message) {

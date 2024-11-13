@@ -1,9 +1,8 @@
 package life.domacitempeh.mqttsensorcollector.component.impl;
 
 import life.domacitempeh.mqttsensorcollector.component.ESPMessageHandler;
-import life.domacitempeh.mqttsensorcollector.log.impl.LoggingMonad;
+import life.domacitempeh.mqttsensorcollector.log.impl.LoggingRegistryImpl;
 import lombok.RequiredArgsConstructor;
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,9 +12,9 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
-public class PictureHandler implements ESPMessageHandler<String, byte[]> {
+public class PictureHandler implements ESPMessageHandler<byte[]> {
 
-    private final LoggingMonad logger;
+    private final LoggingRegistryImpl logger;
 
     private static final Logger log = LoggerFactory.getLogger(PictureHandler.class);
     final String PREAMBLE = "data:image/jpeg;base64,";

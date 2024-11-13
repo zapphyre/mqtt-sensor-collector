@@ -9,6 +9,7 @@ public enum EFullscreenRotaryFunction {
 
     VOL,
     SEEK,
+    SCROLL
     ;
 
     private static final NavigableSet<EFullscreenRotaryFunction> set =

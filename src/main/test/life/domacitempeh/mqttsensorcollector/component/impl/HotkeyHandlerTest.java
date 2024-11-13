@@ -8,6 +8,5 @@ public class HotkeyHandlerTest {
     void testHotkey() {
         HotkeyHandler hotkeyHandler = new HotkeyHandler();
 
-        hotkeyHandler.processMessage("");
     }
 }

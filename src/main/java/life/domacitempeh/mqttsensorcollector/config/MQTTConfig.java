@@ -73,7 +73,7 @@ public class MQTTConfig {
                     .ifPresent(q -> q.accept(message));
         };
     }
-
+/*
     @Bean
     MqttClient mqttClient() throws MqttException {
         MqttClient mqttClient = new MqttClient(BROKER_URL, CLIENT_ID, new MemoryPersistence());
@@ -81,5 +81,5 @@ public class MQTTConfig {
         mqttClient.connect(new MqttConnectOptions());
 
         return mqttClient;
-    }
+    }*/
 }

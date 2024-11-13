@@ -1,7 +1,7 @@
 package life.domacitempeh.mqttsensorcollector.log.impl;
 
 import life.domacitempeh.mqttsensorcollector.log.LogPresenter;
-import life.domacitempeh.mqttsensorcollector.log.MonadLogger;
+import life.domacitempeh.mqttsensorcollector.log.LoggingRegistry;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
@@ -10,17 +10,11 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Component
-public class LoggingMonad implements MonadLogger {
+public class LoggingRegistryImpl implements LoggingRegistry {
     private final List<LogPresenter> logConsumers = new LinkedList<>();
 
-    public void log(byte[] string) {
-        logConsumers.forEach(c -> c.write(string));
-    }
-
-    public void log(byte[] string, Function<byte[], byte[]> mapper) {
-        Optional.ofNullable(string)
-                .map(mapper)
-                .ifPresent(this::log);
+    public void log(byte[] bytea) {
+        logConsumers.forEach(c -> c.write(bytea));
     }
 
     @Override

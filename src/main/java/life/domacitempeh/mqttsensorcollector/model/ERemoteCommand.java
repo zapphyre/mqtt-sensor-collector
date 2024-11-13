@@ -11,6 +11,9 @@ public enum ERemoteCommand {
     ROTARY_CCV,
     ROTARY_CLICK,
     ROTARY_LONG,
+    ROTARY_DOUBLE_CLICK,
+    ROTARY_TRIPLE_CLICK,
+
 
     UNKNOWN
     ;

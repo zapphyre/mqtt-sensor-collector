@@ -1,6 +1,6 @@
 package life.domacitempeh.mqttsensorcollector.log;
 
-public interface MonadLogger {
+public interface LoggingRegistry {
 
     void registerLogger(LogPresenter logger);
 

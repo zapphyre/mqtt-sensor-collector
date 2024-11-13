@@ -14,12 +14,11 @@ import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import life.domacitempeh.mqttsensorcollector.log.LogPresenter;
-import life.domacitempeh.mqttsensorcollector.log.impl.LoggingMonad;
+import life.domacitempeh.mqttsensorcollector.log.impl.LoggingRegistryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.springframework.core.io.ByteArrayResource;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
@@ -32,8 +31,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PhotoMain extends VerticalLayout implements LogPresenter {
 
-    private final LoggingMonad loggingMonad;
-    private final MqttClient mqttClient;
+    private final LoggingRegistryImpl loggingRegistryImpl;
+//    private final MqttClient mqttClient;
 
     public void setImg(byte[] data) {
         StreamResource streamResource = new StreamResource("vaadin-logo.png", () -> new ByteArrayInputStream(data));
@@ -45,7 +44,7 @@ public class PhotoMain extends VerticalLayout implements LogPresenter {
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-        loggingMonad.registerLogger(this);
+        loggingRegistryImpl.registerLogger(this);
 
         Button button = new Button("Shoot!");
         button.addClickListener(this::onComponentEvent);
@@ -54,7 +53,7 @@ public class PhotoMain extends VerticalLayout implements LogPresenter {
 
     @Override
     protected void onDetach(DetachEvent detachEvent) {
-        loggingMonad.removeLogger(this);
+        loggingRegistryImpl.removeLogger(this);
     }
 
     @Override
@@ -64,6 +63,6 @@ public class PhotoMain extends VerticalLayout implements LogPresenter {
 
     @SneakyThrows
     private void onComponentEvent(ClickEvent<Button> q) {
-        mqttClient.publish("cam", new MqttMessage("shoot".getBytes(StandardCharsets.UTF_8)));
+//        mqttClient.publish("cam", new MqttMessage("shoot".getBytes(StandardCharsets.UTF_8)));
     }
 }

@@ -10,22 +10,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 @Transactional
 @RequiredArgsConstructor
-public class SensorUpdateHandler implements ESPMessageHandler<String, MeasurementLog> {
+public class SensorUpdateHandler implements ESPMessageHandler<MeasurementLog> {
 
     private final String[] sensors = {"multi", "odor", "voc", "aqi", "tvoc", "eco2"};
     private final MeasurementRepository measurementRepository;
-
-    @Override
-    public void processMessage(MeasurementLog msg) {
-        MeasurementLog saved = measurementRepository.save(msg);
-        System.out.println(saved);
-    }
 
     @Override
     public MeasurementLog getMsgConverter(String payload) {
@@ -39,6 +32,12 @@ public class SensorUpdateHandler implements ESPMessageHandler<String, Measuremen
                 .collect(Collectors.toList());
 
         return MeasurementLog.builder().measurements(meas).build();
+    }
+
+    @Override
+    public void processMessage(MeasurementLog msg) {
+        MeasurementLog saved = measurementRepository.save(msg);
+        System.out.println(saved);
     }
 
     @Override
