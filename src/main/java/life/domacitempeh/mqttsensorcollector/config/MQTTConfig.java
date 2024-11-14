@@ -1,12 +1,8 @@
 package life.domacitempeh.mqttsensorcollector.config;
 
-import life.domacitempeh.mqttsensorcollector.component.ESPMessageHandler;
 import life.domacitempeh.mqttsensorcollector.component.TopicalMessageHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -17,11 +13,11 @@ import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.integration.mqtt.support.MqttHeaders;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -47,30 +43,35 @@ public class MQTTConfig {
     }
 
     @Bean
-    public MessageProducer inbound(List<TopicalMessageHandler> handlers) {
-        String[] topics = handlers.stream()
+    public String[] arraizeTopicHandlers(List<TopicalMessageHandler> handlers) {
+        return handlers.stream()
                 .map(TopicalMessageHandler::getTopic)
                 .toArray(String[]::new);
-        MessageChannel messageChannel = mqttInputChannel();
+    }
+
+    @Bean
+    public MessageProducer inbound(String[] topics) {
         MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter(CLIENT_ID,
                 mqttClientFactory(), topics);
+
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(1);
-        adapter.setOutputChannel(messageChannel);
+        adapter.setOutputChannel(mqttInputChannel());
 
         return adapter;
     }
 
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
-    public MessageHandler handler(Handler handler) {
+    public MessageHandler handler(HandlerRegistry handlerRegistry) {
         return message -> {
             Optional.of(message)
-                    .filter(m -> Objects.nonNull(m.getHeaders().get(MqttHeaders.RECEIVED_TOPIC)))
-                    .map(q -> q.getHeaders().get(MqttHeaders.RECEIVED_TOPIC).toString())
-                    .map(handler::forTopic)
-                    .ifPresent(q -> q.accept(message));
+                    .map(Message::getHeaders)
+                    .map(h -> h.get(MqttHeaders.RECEIVED_TOPIC))
+                    .map(Object::toString)
+                    .map(handlerRegistry::forTopic)
+                    .ifPresent(q -> q.processMessage(message));
         };
     }
 /*
