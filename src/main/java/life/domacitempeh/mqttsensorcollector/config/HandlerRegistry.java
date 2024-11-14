@@ -4,7 +4,7 @@ import org.springframework.messaging.Message;
 
 import java.util.function.Consumer;
 
-public interface Handler {
+public interface HandlerRegistry {
 
     Consumer<Message<?>> forTopic(String topic);
 }
